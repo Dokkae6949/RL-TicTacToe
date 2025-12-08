@@ -69,7 +69,7 @@ def pretrain_with_csv_data(agent: QLearningAgent, data_file="tic-tac-toe.data", 
             if done:
                 if outcome == 'win' and env.winner == 1:
                     reward = 1.0
-                elif outcome == 'negative' and env.winner == 1:
+                elif outcome == 'negative' and env.winner == -1:
                     reward = -1.0
                 elif env.winner == 0:
                     reward = 0.0

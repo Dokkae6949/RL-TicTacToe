@@ -20,7 +20,7 @@ RL-TicTacToe/
 ├── play.py          # Console-based play interface
 ├── gui.py           # Tkinter GUI for playing against agent
 ├── data_loader.py   # CSV data loading and preprocessing
-├── eveluate.py      # Agent evaluation script
+├── evaluate.py      # Agent evaluation script
 ├── read_table.py    # Q-table inspection utility
 ├── tic-tac-toe.data # Training data (CSV format)
 └── qtable.pkl       # Trained Q-table (generated after training)
@@ -137,7 +137,7 @@ python play.py
 Test the agent's performance against a random opponent:
 
 ```bash
-python eveluate.py
+python evaluate.py
 ```
 
 This runs 10,000 games and reports win/draw/loss rates.
