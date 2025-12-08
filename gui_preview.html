@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TicTacToe GUI Preview</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            background-color: #f0f0f0;
+        }
+        .container {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+        h1 {
+            margin-top: 0;
+            color: #333;
+        }
+        .status {
+            font-size: 16px;
+            margin: 20px 0;
+            color: #555;
+            min-height: 24px;
+        }
+        .board {
+            display: inline-grid;
+            grid-template-columns: repeat(3, 100px);
+            grid-gap: 5px;
+            margin: 20px 0;
+        }
+        .cell {
+            width: 100px;
+            height: 100px;
+            background: #fff;
+            border: 2px solid #333;
+            font-size: 48px;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+        .cell:hover {
+            background: #e8e8e8;
+        }
+        .cell.x {
+            color: #e74c3c;
+        }
+        .cell.o {
+            color: #3498db;
+        }
+        .controls {
+            margin-top: 20px;
+        }
+        .btn {
+            padding: 10px 30px;
+            margin: 0 5px;
+            font-size: 14px;
+            background: #3498db;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+        .btn:hover {
+            background: #2980b9;
+        }
+        .info {
+            margin-top: 15px;
+            font-size: 12px;
+            color: #888;
+        }
+        .note {
+            margin-top: 30px;
+            padding: 15px;
+            background: #fffbea;
+            border-left: 4px solid #f39c12;
+            text-align: left;
+        }
+        .note h3 {
+            margin-top: 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>TicTacToe - RL Agent</h1>
+        <div class="status">Agent plays X, You play O</div>
+        
+        <div class="board">
+            <div class="cell"></div>
+            <div class="cell o">O</div>
+            <div class="cell"></div>
+            <div class="cell x">X</div>
+            <div class="cell x">X</div>
+            <div class="cell"></div>
+            <div class="cell"></div>
+            <div class="cell o">O</div>
+            <div class="cell"></div>
+        </div>
+        
+        <div class="controls">
+            <button class="btn">New Game</button>
+            <button class="btn" style="background: #95a5a6;">Quit</button>
+        </div>
+        
+        <div class="info">Loaded trained model</div>
+        
+        <div class="note">
+            <h3>📝 GUI Preview</h3>
+            <p>This is a visual mockup of the tkinter GUI interface created for the RL-TicTacToe project.</p>
+            <p><strong>Features:</strong></p>
+            <ul style="text-align: left;">
+                <li>3×3 grid with clickable cells</li>
+                <li>Real-time status updates</li>
+                <li>Visual feedback for moves</li>
+                <li>New Game and Quit buttons</li>
+                <li>Agent plays as X (red), Player plays as O (blue)</li>
+            </ul>
+            <p><strong>To run the actual GUI:</strong></p>
+            <code style="background: #f5f5f5; padding: 5px; display: block; margin-top: 5px;">
+                python gui.py
+            </code>
+        </div>
+    </div>
+</body>
+</html>
