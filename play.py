@@ -1,8 +1,6 @@
 from game import TicTacToe
 from agent import QLearningAgent
-
-def make_state_key(board_tuple, current_player):
-    return (board_tuple, current_player)
+from utils import make_state_key
 
 def play(qtable_path="qtable.pkl"):
     agent = QLearningAgent()

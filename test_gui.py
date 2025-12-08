@@ -5,12 +5,8 @@ This tests the core game logic and agent integration used by the GUI.
 
 from game import TicTacToe
 from agent import QLearningAgent
+from utils import make_state_key
 import os
-
-
-def make_state_key(board_tuple, current_player):
-    """Same state key function used in training and GUI."""
-    return (board_tuple, current_player)
 
 
 def test_gui_game_logic():

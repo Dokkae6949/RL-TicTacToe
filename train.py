@@ -1,16 +1,13 @@
 from game import TicTacToe
 from agent import QLearningAgent
 from data_loader import load_tictactoe_data
+from utils import make_state_key
 import random
 
 EPSILON_DECAY = 0.99995
 MIN_EPSILON = 0.05
 EPISODES = 50000
 CSV_PRETRAIN_EPISODES = 5000
-
-def make_state_key(board_tuple, current_player):
-    # represent state as (board_tuple, current_player) so Q differentiates turns
-    return (board_tuple, current_player)
 
 def pretrain_with_csv_data(agent: QLearningAgent, data_file="tic-tac-toe.data", episodes=CSV_PRETRAIN_EPISODES):
     """
