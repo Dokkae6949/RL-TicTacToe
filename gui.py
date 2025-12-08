@@ -328,6 +328,11 @@ class TicTacToeGUI:
             self.agent_symbol = new_agent_symbol[:1]
         else:
             # Reset to defaults if invalid
+            if not new_player_symbol or not new_agent_symbol:
+                messagebox.showwarning("Invalid Symbols", "Symbols cannot be empty. Using defaults: O and X")
+            elif new_player_symbol == new_agent_symbol:
+                messagebox.showwarning("Invalid Symbols", "Player and agent must use different symbols. Using defaults: O and X")
+            
             self.player_symbol = "O"
             self.agent_symbol = "X"
             self.player_symbol_var.set(self.player_symbol)

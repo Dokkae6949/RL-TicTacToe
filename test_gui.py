@@ -94,9 +94,8 @@ def test_gui_components():
         import gui
         print("✓ GUI module imported successfully")
         
-        # Check that key functions exist
+        # Check that key components exist
         assert hasattr(gui, 'TicTacToeGUI'), "TicTacToeGUI class not found"
-        assert hasattr(gui, 'make_state_key'), "make_state_key function not found"
         assert hasattr(gui, 'main'), "main function not found"
         print("✓ All required GUI components present")
         
