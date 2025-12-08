@@ -1,10 +1,8 @@
 # evaluate.py
 from game import TicTacToe
 from agent import QLearningAgent
+from utils import make_state_key
 import random
-
-def make_state_key(board_tuple, current_player):
-    return (board_tuple, current_player)
 
 def evaluate(agent: QLearningAgent, episodes=1000):
     env = TicTacToe()

@@ -47,7 +47,9 @@ def main():
     print("\n  A) Play with GUI (recommended):")
     print("     $ python gui.py")
     print("     - Click cells to make your move")
-    print("     - You play as O, Agent plays as X")
+    print("     - Toggle dark mode with the 🌙 button")
+    print("     - Choose who starts (agent or player)")
+    print("     - Customize symbols before starting")
     print("     - Click 'New Game' to restart")
     
     print("\n  B) Play in console:")

@@ -103,10 +103,11 @@ python gui.py
 ```
 
 Features:
+- **Dark Mode**: Toggle between light and dark themes with 🌙/☀️ button
+- **Choose Starting Player**: Select whether agent or player goes first
+- **Customizable Symbols**: Change player and agent symbols before starting
 - Click on empty cells to make your move
-- You play as O (second player)
-- Agent plays as X (first player)
-- "New Game" button to start over
+- "New Game" button to restart with current settings
 - Visual feedback for game status
 
 With custom model:
@@ -237,6 +238,13 @@ This project is open source and available under the MIT License.
 - TicTacToe dataset from UCI Machine Learning Repository
 - Q-Learning algorithm implementation based on Sutton & Barto's RL book
 - GUI built with Python's tkinter module
+
+## Recent Enhancements
+
+- [x] Dark mode toggle for better user experience
+- [x] Choose who starts the game (player or agent)
+- [x] Customizable symbols for player and agent
+- [x] Simplified and modular codebase
 
 ## Future Enhancements
 

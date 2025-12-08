@@ -5,12 +5,8 @@ This tests the core game logic and agent integration used by the GUI.
 
 from game import TicTacToe
 from agent import QLearningAgent
+from utils import make_state_key
 import os
-
-
-def make_state_key(board_tuple, current_player):
-    """Same state key function used in training and GUI."""
-    return (board_tuple, current_player)
 
 
 def test_gui_game_logic():
@@ -98,9 +94,8 @@ def test_gui_components():
         import gui
         print("✓ GUI module imported successfully")
         
-        # Check that key functions exist
+        # Check that key components exist
         assert hasattr(gui, 'TicTacToeGUI'), "TicTacToeGUI class not found"
-        assert hasattr(gui, 'make_state_key'), "make_state_key function not found"
         assert hasattr(gui, 'main'), "main function not found"
         print("✓ All required GUI components present")
         
