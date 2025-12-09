@@ -84,59 +84,91 @@ def pretrain_with_csv_data(agent: QLearningAgent, data_file="tic-tac-toe.data", 
 
 def train(episodes=EPISODES, save_path="qtable.pkl", use_csv_data=True, csv_data_file="tic-tac-toe.data"):
     env = TicTacToe()
-    agent = QLearningAgent(epsilon=1.0)
-    
-    # Pre-train with CSV data if available
-    if use_csv_data:
-        pretrain_with_csv_data(agent, csv_data_file)
 
-    print(f"=== Starting main RL training ===")
+    # zwei Agents – einer spielt X, einer O
+    agent_X = QLearningAgent(epsilon=1.0)
+    agent_O = QLearningAgent(epsilon=1.0)
+
+    # Pretrain für beide Spieler
+    if use_csv_data:
+        pretrain_with_csv_data(agent_X, csv_data_file)
+        pretrain_with_csv_data(agent_O, csv_data_file)
+
+    print(f"=== Starting main RL training (AI vs AI) ===")
+
     for ep in range(episodes):
         board = env.reset()
         done = False
+
         while not done:
+            # Agent auswählen je nach Spieler
+            current_agent = agent_X if env.current_player == 1 else agent_O
+
             state_key = make_state_key(board, env.current_player)
             legal = env.legal_actions()
-            action = agent.get_action(state_key, legal, training=True)
+            action = current_agent.get_action(state_key, legal, training=True)
 
-            # agent plays
-            after_agent_board, reward_agent_move, done, info = env.step(action)
+            # Zug ausführen
+            next_board, reward, done, info = env.step(action)
 
+            # Endzustand nach eigenem Zug
             if done:
-                # terminal immediately after agent move
-                next_state_key = make_state_key(after_agent_board, env.current_player)
-                agent.update(state_key, action, reward_agent_move, next_state_key, [], True)
-                board = after_agent_board
+                next_state_key = make_state_key(next_board, env.current_player)
+                current_agent.update(state_key, action, reward, next_state_key, [], True)
+                board = next_board
                 break
 
-            # opponent (random) plays
-            opp_action = random.choice(env.legal_actions())
-            after_opp_board, reward_opp_move, done, info = env.step(opp_action)
+            # Zug des anderen Agents (auch KI)
+            other_agent = agent_O if env.current_player == -1 else agent_X
 
-            # compute agent-centric reward AFTER opponent move
+            opp_state_key = make_state_key(next_board, env.current_player)
+            opp_legal = env.legal_actions()
+            opp_action = other_agent.get_action(opp_state_key, opp_legal, training=True)
+
+            after_opp_board, opp_reward, done, info = env.step(opp_action)
+
+            # Rewards aus Sicht beider Agents korrekt weitergeben:
             if done:
-                # game ended because of opponent move or draw
                 if env.winner == 1:
-                    final_reward = 1
+                    agent_X_reward = 1
+                    agent_O_reward = -1
                 elif env.winner == -1:
-                    final_reward = -1
+                    agent_X_reward = -1
+                    agent_O_reward = 1
                 else:
-                    final_reward = 0
-            else:
-                final_reward = 0
+                    agent_X_reward = 0
+                    agent_O_reward = 0
 
-            next_state_key = make_state_key(after_opp_board, env.current_player)
-            agent.update(state_key, action, final_reward, next_state_key, env.legal_actions(), done)
+                # Updates für beide Agents
+                next_state_key_X = make_state_key(after_opp_board, 1)
+                next_state_key_O = make_state_key(after_opp_board, -1)
+
+                agent_X.update(state_key, action, agent_X_reward, next_state_key_X, [], True)
+                agent_O.update(opp_state_key, opp_action, agent_O_reward, next_state_key_O, [], True)
+
+            else:
+                next_state_key = make_state_key(after_opp_board, env.current_player)
+
+                # partieller Reward
+                current_agent.update(state_key, action, 0, next_state_key, env.legal_actions(), False)
+                other_agent.update(opp_state_key, opp_action, 0, next_state_key, env.legal_actions(), False)
+
             board = after_opp_board
 
-        # decay epsilon slowly
-        agent.epsilon = max(MIN_EPSILON, agent.epsilon * EPSILON_DECAY)
-        if ep % 5000 == 0:
-            print(f"Episode {ep}/{episodes}, epsilon={agent.epsilon:.3f}")
+        # Epsilon-Decay für BEIDE Agents
+        agent_X.epsilon = max(MIN_EPSILON, agent_X.epsilon * EPSILON_DECAY)
+        agent_O.epsilon = max(MIN_EPSILON, agent_O.epsilon * EPSILON_DECAY)
 
-    agent.save(save_path)
-    print(f"Training completed and saved to {save_path}")
-    return agent
+        if ep % 5000 == 0:
+            print(f"Episode {ep}/{episodes} | eps X={agent_X.epsilon:.3f} | eps O={agent_O.epsilon:.3f}")
+
+    # Am Ende: beide Q-Tables speichern
+    agent_X.save("qtable_X.pkl")
+    agent_O.save("qtable_O.pkl")
+
+    print("Training completed (AI vs AI).")
+    return agent_X, agent_O
+
 
 if __name__ == "__main__":
     import argparse
